@@ -9,7 +9,6 @@ private static final String URL = "jdbc:mysql://localhost:3306/zapateria";
 private static final String USER = "root";
 private static final String PASSWORD = "root";
 
-
 /**
  * Método main que invoca a los otros métodos para acceder a la base de datos.
  * Solo puede insertar o eliminar (por su CUIT) a la tabla proveedores, y consultar todos
@@ -33,19 +32,19 @@ public static void main(String[] args) {
 
             //Buscar metodo solicitado e invocarlo. Lanzar excepción si la cantidad de argumentos es incorrecta
             else if (args[0] == "InsertarDatosProveedor"){
-                if (args.length != 5) 
+                if (args.length != 5)  //Método, CUIT, razón social, dirección, tel fijo 
                     throw new IllegalArgumentException("Cantidad de parámetros incorrecta. InsertarDatosProveedor requiere 4 parámetros.");
                 InsertarDatosProveedor(conexion, Integer.parseInt(args[1]), args[2], args[3], Integer.parseInt(args[4]));
             }
 
             else if(args[0] == "EliminarProveedor"){
-                if (args.length != 5) 
+                if (args.length != 2)  //Método, CUIT
                     throw new IllegalArgumentException("Cantidad de parámetros incorrecta. EliminarProveedor requiere 1 parámetro.");
                 EliminarProveedor(conexion, Integer.parseInt(args[1]));
             }
             
             else if(args[0] =="RetornarProveedores"){
-                if (args.length != 5) 
+                if (args.length != 1)  //Solo el método
                     throw new IllegalArgumentException("Cantidad de parámetros incorrecta. RetornarProveedores no requiere parámetros.");
                 RetornarProveedores(conexion);
             }
@@ -63,7 +62,6 @@ public static void main(String[] args) {
             e.printStackTrace();
         }
     }
-
 
 /**
  * Inserta un nuevo proveedor a la tabla proveedores de la base de datos, con sus datos dados
@@ -96,7 +94,6 @@ public static void InsertarDatosProveedor(Connection conexion, int CUIT, String 
     }
 }
 
-
 /**
  * Dado un CUIT, elimina de la tabla proveedores al proveedor que tenga dicho CUIT asignado.
  * @param conexion el objeto Connection que represente la conexión a la base de datos
@@ -122,7 +119,6 @@ public static void EliminarProveedor(Connection conexion, int CUIT){
     }
 }
 
-
 /**
  * Retorna una lista de los todos proveedores guardados en la tabla proveedores de la base de datos.
  * La lista se imprime por consola de forma "proveedor x: CUIT, razon_social, direccion, tel_fijo",
@@ -135,7 +131,7 @@ public static void RetornarProveedores(Connection conexion){
     String statementString = "SELECT * FROM proveedor";
     try {
         PreparedStatement stmt = conexion.prepareStatement(statementString);
-        ResultSet rs = stmt.executeQuery();
+        ResultSet rs = stmt.executeQuery(); //Ejecutar consulta
 
         //Iterar por rs, proveedor a proveedor, imprimiendo sus datos en consola
         int count = 1;
@@ -143,7 +139,6 @@ public static void RetornarProveedores(Connection conexion){
             System.out.println("proveedor " + count + ": " + rs.getInt("CUIT") + ", " + rs.getString("razon_social") + ", " + rs.getString("direccion") + ", " + rs.getInt("tel_fijo"));
             count++;
         }
-        
         System.out.println("Fin de la lista. Todos los proveedores listados correctamente.");
     }
 
