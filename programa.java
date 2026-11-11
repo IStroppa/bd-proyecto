@@ -28,7 +28,7 @@ public static void main(String[] args) {
             
             //Si no hay argumentos, no hacer nada
             if (args.length == 0)
-                System.out.println("No se especifico ningún método. Para una lista de métodos soportados, consultar README.");
+                System.out.println("No se especifico ningún método. Para una lista de métodos soportados, consultar documentación.");
 
             //Buscar metodo solicitado e invocarlo. Lanzar excepción si la cantidad de argumentos es incorrecta
             else if (args[0] == "InsertarDatosProveedor"){
@@ -51,7 +51,7 @@ public static void main(String[] args) {
             
             //Si el primer argumento no coincide con ninguno de los 3 soportados, hay un error
             else
-                throw new IllegalArgumentException("Método no soportado. Para una lista de métodos soportados, consultar README.");
+                throw new IllegalArgumentException("Método no soportado. Para una lista de métodos soportados, consultar documentación.");
         
             conexion.close(); //Cerrar la conexion una vez terminada la ejecución de métodos
         }
