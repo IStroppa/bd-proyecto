@@ -31,19 +31,19 @@ public static void main(String[] args) {
                 System.out.println("No se especifico ningún método. Para una lista de métodos soportados, consultar documentación.");
 
             //Buscar metodo solicitado e invocarlo. Lanzar excepción si la cantidad de argumentos es incorrecta
-            else if (args[0] == "InsertarDatosProveedor"){
+            else if (args[0].equals("InsertarDatosProveedor")){
                 if (args.length != 5)  //Método, CUIT, razón social, dirección, tel fijo 
                     throw new IllegalArgumentException("Cantidad de parámetros incorrecta. InsertarDatosProveedor requiere 4 parámetros.");
-                InsertarDatosProveedor(conexion, Integer.parseInt(args[1]), args[2], args[3], Integer.parseInt(args[4]));
+                InsertarDatosProveedor(conexion, Long.parseLong(args[1]), args[2], args[3], Long.parseLong(args[4]));
             }
 
-            else if(args[0] == "EliminarProveedor"){
+            else if(args[0].equals("EliminarProveedor")){
                 if (args.length != 2)  //Método, CUIT
                     throw new IllegalArgumentException("Cantidad de parámetros incorrecta. EliminarProveedor requiere 1 parámetro.");
-                EliminarProveedor(conexion, Integer.parseInt(args[1]));
+                EliminarProveedor(conexion, Long.parseLong(args[1]));
             }
             
-            else if(args[0] =="RetornarProveedores"){
+            else if(args[0].equals("RetornarProveedores")){
                 if (args.length != 1)  //Solo el método
                     throw new IllegalArgumentException("Cantidad de parámetros incorrecta. RetornarProveedores no requiere parámetros.");
                 RetornarProveedores(conexion);
@@ -71,7 +71,7 @@ public static void main(String[] args) {
  * @param direccion la dirección del proveedor 
  * @param tel_fijo el telefono fijo del proveedor (como un int, sin "+" al principio)
  */
-public static void InsertarDatosProveedor(Connection conexion, int CUIT, String razon_social, String direccion, int tel_fijo){
+public static void InsertarDatosProveedor(Connection conexion, long CUIT, String razon_social, String direccion, long tel_fijo){
     
     //Statement en SQL a ejecutar para la inserción
     String statemeString = "INSERT INTO proveedor (CUIT, razon_social, direccion, tel_fijo) VALUES (?, ?, ?, ?)";
@@ -80,10 +80,10 @@ public static void InsertarDatosProveedor(Connection conexion, int CUIT, String 
         PreparedStatement stmt = conexion.prepareStatement(statemeString);
         
         //Asignar parámetros a los valores de stmt para enviarlos a la base de datos
-        stmt.setInt(1, CUIT);
+        stmt.setLong(1, CUIT);
         stmt.setString(2, razon_social);
         stmt.setString(3, direccion);
-        stmt.setInt(4, tel_fijo);
+        stmt.setLong(4, tel_fijo);
         
         stmt.executeUpdate(); //Ejecutar la inserción
         System.out.println("Proveedor insertado correctamente.");
@@ -99,16 +99,16 @@ public static void InsertarDatosProveedor(Connection conexion, int CUIT, String 
  * @param conexion el objeto Connection que represente la conexión a la base de datos
  * @param CUIT el CUIT del proveedor que se desea eliminar
  */
-public static void EliminarProveedor(Connection conexion, int CUIT){
+public static void EliminarProveedor(Connection conexion, long CUIT){
     
     //Statement en SQL a ejecutar para la inserción
-    String statementString = "DELETE FROM proveedor (CUIT, razon_social, direccion, tel_fijo) WHERE CUIT = ?";
+    String statementString = "DELETE FROM proveedor WHERE CUIT = ?";
         
     try {
         PreparedStatement stmt = conexion.prepareStatement(statementString);
     
         //Asignar parámetros al CUIT del proveedor que se quiere borrar
-        stmt.setInt(1, CUIT);
+        stmt.setLong(1, CUIT);
     
         stmt.executeUpdate(); //Ejecutar la eliminación
         System.out.println("Proveedor eliminado correctamente.");
@@ -136,7 +136,9 @@ public static void RetornarProveedores(Connection conexion){
         //Iterar por rs, proveedor a proveedor, imprimiendo sus datos en consola
         int count = 1;
         while(rs.next()){
-            System.out.println("proveedor " + count + ": " + rs.getInt("CUIT") + ", " + rs.getString("razon_social") + ", " + rs.getString("direccion") + ", " + rs.getInt("tel_fijo"));
+            System.out.println("proveedor " + count + ": " + rs.getLong("CUIT") + ", " + 
+                                rs.getString("razon_social") + ", " + rs.getString("direccion") +
+                                ", " + rs.getLong("tel_fijo"));
             count++;
         }
         System.out.println("Fin de la lista. Todos los proveedores listados correctamente.");

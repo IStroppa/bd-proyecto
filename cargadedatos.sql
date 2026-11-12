@@ -1,4 +1,3 @@
-
 INSERT INTO proveedor (CUIT, razon_social, direccion, tel_fijo) VALUES
 (20301112229, 'Distribuidora del Calzado S.A.', 'Av. Corrientes 1234', 1143215555),
 (20303334449, 'Calzados Argentinos SRL', 'Calle San Martín 567', 1149876666);
@@ -22,7 +21,6 @@ INSERT INTO cliente (DNI, nombre, apellido) VALUES
 (25111222, 'Juan', 'Pérez'),
 (28333444, 'Laura', 'Fernández'),
 (31555666, 'Pedro', 'Martínez');
-
 
 INSERT INTO celulares (CUIT, numero) VALUES
 (20301112229, 1155443322),
@@ -57,6 +55,7 @@ INSERT INTO franco (nro_vendedor, fecha, observación) VALUES
 (2, '2026-05-16', 'Franco semanal');
 
 INSERT INTO venta (nro_vendedor, monto, fecha) VALUES
+(1, 500000, '2025-02-09'),
 (1, 43500.00, '2026-05-10'),
 (2, 32000.00, '2026-05-11');
 
